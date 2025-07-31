@@ -8,18 +8,22 @@
   </head>
   <body>
     <div class="form-container">
-      <form id="record-form">
+      <form id="record-form" novalidate>
         <label for="reference-number">Reference Number <span style="color: red;">*</span></label>
         <input type="text" id="reference-number" name="reference-number"/>
+        <span class="error-message" id="error-reference-number"></span>
 
         <label for="name-of-taxable-person">Legal Name of Taxable Person <span style="color: red;">*</span></label>
         <input type="text" id="name-of-taxable-person" name="name-of-taxable-person"/>
+        <span class="error-message" id="error-name-of-taxable-person"></span>
 
         <label for="registered-address">Registered Address <span style="color: red;">*</span></label>
         <input type="text" id="registered-address" name="registered-address"/>
+        <span class="error-message" id="error-registered-address"></span>
 
         <label for="application-date">Application Date <span style="color: red;">*</span></label>
         <input type="date" id="application-date" name="application-date" required />
+        <span class="error-message" id="error-application-date"></span>
 
         <label for="attach-acknowledgement" style="margin-top: 16px; display: block;">Attach Acknowledgement email from FTA 
           <span title="Drag and drop your file here, or click “Choose File” to upload the Acknowledgement email from FTA." style="cursor: help; color: #555;">&#9432;</span>
