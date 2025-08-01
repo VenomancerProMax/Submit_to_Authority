@@ -87,7 +87,66 @@ async function update_record(event = null) {
         return;
     }
 
-    alert("SUBMIT BUTTON CLICKED");
+    try {
+      await ZOHO.CRM.API.updateRecord({
+      Entity: "Applications1",
+        APIData: {
+          id: app_id,
+          Reference_Number: referenceNo,
+          Legal_Name_of_Taxable_Person: taxablePerson,
+          Registered_Address: registeredAddress,
+          Application_Date: applicationDate
+        }
+      });
+
+      const fileUploadPromise = new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = async function () {
+          try {
+            const fileResp = await ZOHO.CRM.API.attachFile({
+              Entity: "Applications1",
+              RecordID: app_id,
+              File: {
+                Name: file.name,
+                Content: reader.result,
+              },
+            });
+            resolve(fileResp);
+          } catch (uploadError) {
+            reject(uploadError);
+          }
+        };
+
+        reader.onerror = reject;
+        reader.onabort = () => reject(new Error("File reading aborted"));
+
+        reader.readAsArrayBuffer(file);
+      });
+      fileUploadPromise.catch(console.error);
+      console.log("FILE UPLOAD: ", fileUploadPromise);
+
+      await fileUploadPromise;
+
+      setTimeout(() => {
+        ZOHO.CRM.BLUEPRINT.proceed();
+        ZOHO.CRM.UI.Popup.closeReload();
+        console.log("Successfully proceeded with Blueprint");
+      }, 3000);
+
+
+    } catch (err) {
+        console.error("ERROR IN UPDATE RECORD: ", err);
+        if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+      }
+    } finally {
+        if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+      }
+    }
 }
 
 document.getElementById("record-form").addEventListener("submit", update_record);
