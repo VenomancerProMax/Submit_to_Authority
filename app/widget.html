@@ -37,6 +37,19 @@
       </form>
     </div>
 
+    <!-- Upload overlay/modal -->
+    <div id="upload-buffer" class="upload-overlay hidden" aria-live="polite" role="status">
+    <div class="upload-box">
+        <div class="upload-icon">&#128228;</div>
+        <div class="upload-title" id="upload-title">Uploading your file...</div>
+        <div class="progress-wrapper">
+        <div class="progress-bar-background">
+            <div id="upload-progress" class="progress-bar-fill animate"></div>
+        </div>
+        </div>
+    </div>
+    </div>
+
     <div>
       <button class="close-button" onclick="closeWidget()">×</button>
     </div>
