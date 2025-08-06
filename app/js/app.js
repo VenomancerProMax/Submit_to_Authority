@@ -1,4 +1,4 @@
-let app_id;
+let app_id, account_id;
 let cachedFile = null;
 let cachedBase64 = null;
 
@@ -12,6 +12,18 @@ ZOHO.embeddedApp.on("PageLoad", async (entity) => {
     });
     const applicationData = appResponse.data[0];
     app_id = applicationData.id;
+    account_id = applicationData.Account_Name.id;
+
+    const accountResponse = await ZOHO.CRM.API.getRecord({
+      Entity: "Accounts",
+      approved: "both",
+      RecordID: account_id,
+    });
+    const accountData = accountResponse.data[0];
+    legalNameTaxablePerson = accountData.Legal_Name_of_Taxable_Person;
+
+    console.log("LEGAL NAME OF TAXABLE PERSON: ", legalNameTaxablePerson);
+    document.getElementById("name-of-taxable-person").value = legalNameTaxablePerson || "";
   } catch (err) {
     console.error(err);
   }
@@ -153,6 +165,14 @@ async function update_record(event = null) {
         Registered_Address: registeredAddress,
         Application_Date: applicationDate
       }
+    });
+
+    await ZOHO.CRM.API.updateRecord({
+      Entity: "Accounts",
+      APIData: {
+        id: account_id,
+        Legal_Name_of_Taxable_Person: taxablePerson,
+      },
     });
 
     await uploadFileToCRM();
