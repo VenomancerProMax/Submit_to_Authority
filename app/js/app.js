@@ -20,7 +20,7 @@ ZOHO.embeddedApp.on("PageLoad", async (entity) => {
       RecordID: account_id,
     });
     const accountData = accountResponse.data[0];
-    legalNameTaxablePerson = accountData.Legal_Name_of_Taxable_Person;
+    legalNameTaxablePerson = accountData.Account_Name;
 
     console.log("LEGAL NAME OF TAXABLE PERSON: ", legalNameTaxablePerson);
     document.getElementById("name-of-taxable-person").value = legalNameTaxablePerson || "";
