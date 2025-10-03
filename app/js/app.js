@@ -175,7 +175,8 @@ async function update_record(event = null) {
       Entity: "Accounts",
       APIData: {
         id: account_id,
-        Legal_Name_of_Taxable_Person: taxablePerson,
+        Legal_Name_of_Taxable_Person:taxablePerson,
+        Registered_Address: registeredAddress
       },
     });
 
