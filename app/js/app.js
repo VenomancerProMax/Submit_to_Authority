@@ -191,7 +191,7 @@ async function update_record(event) {
     });
 
     // --- 2. Update Account via Deluge function (USING REQUESTED SYNTAX) ---
-    var func_name = "update_account_via_widget";
+    var func_name = "ta_ctr_submit_to_auth_update_account";
     var req_data = {
         "arguments": JSON.stringify({
             "account_id": safe_account_id,
